@@ -9,6 +9,8 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
+#ifdef __OBJC__
+
 #import "TLMacros.h"            // 宏
 #import "TLEnumerate.h"         // 枚举
 #import "TLEventStatistics.h"   // 数据统计
@@ -41,6 +43,8 @@
 #import "UIImagePickerController+Fixed.h"
 #import "UIBarButtonItem+Action.h"
 #import "UINavigationItem+Fixed.h"
+
+#endif
 #define productGuid @"85454ad2-b318-4d17-9db7-3617a2f55df0"
 //static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
