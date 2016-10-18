@@ -12,8 +12,9 @@
 #import "TLChatBaseViewController+MessageDisplayView.h"
 #import "UIImage+Size.h"
 #import "DataHandel.h"
-
-
+#import "YYModel.h"
+#import "MQTTKit.h"
+#import "SingleChartModel.h"
 #define MC_PATH  "http://mc.mtcent.com"
 #define DEV_EC_PATH  "http://mc.dev.mtcent.com"
 #define MC_HOST  "mc.mtcent.com"
@@ -25,7 +26,13 @@
 #define passWord "123456"
 #define channel "topic"
 #define userName @"真子丹"
+@interface TLChatBaseViewController ()
 
+@property (strong, nonatomic) MQTTClient *client;
+@property(strong, nonatomic) NSDictionary *resultDic;
+@property(strong, nonatomic)SingleChartModel *mdoel;
+
+@end
 @implementation TLChatBaseViewController
 
 - (void)loadView
@@ -43,7 +50,117 @@
     [super viewDidLoad];
     
     [self loadKeyboard];
+    
+    //创建通道
+     [self startSingleChat];
 }
+#pragma mark 创建通道
+//startSingleChat
+-(void)startSingleChat{
+    NSString *temp = [NSString stringWithFormat:@"http://%s/startSingleChat?source_username=%s&source_user_password=%s&target_username=%s&product_guid=4f454d8d-7dc9-4fd5-9a87-d15399f1ece4",DEV_MC_HOST,userGuid,passWord,targetGuid];
+    [DataHandel GetDataWithURLstr:temp complete:^(id result) {
+        if (result) {
+            NSLog(@"%@",result);
+            NSDictionary *dic = result;
+            NSString *code = [dic objectForKey:@"code"];
+            if (code.intValue == 200) {
+                _resultDic = [dic objectForKey:@"result"];
+                _mdoel = [SingleChartModel yy_modelWithDictionary:_resultDic];
+                [self connetChart];
+            }
+            
+        }
+    }];
+}
+-(void)connetChart{
+    NSString *clientID = [UIDevice currentDevice].identifierForVendor.UUIDString;
+    if (!self.client) {
+        self.client = [[MQTTClient alloc]initWithClientId:clientID];
+    }
+    
+    NSString *mcAccessToken = @"123456";
+    [self.client connectToHost:@DEV_MC_HOST andName:@userGuid andPassword:mcAccessToken completionHandler:^(MQTTConnectionReturnCode code) {
+        if (code == ConnectionAccepted) {
+            //订阅
+            [self.client subscribe:@"/user/chat/123-topic" withCompletionHandler:^(NSArray *grantedQos) {
+                NSLog(@"%@",grantedQos);
+                
+            }];
+        }
+    }];
+    
+    [self.client setMessageHandler:^(MQTTMessage* message)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             //             //接收到消息，更新界面时需要切换回主线程
+             NSDictionary *dic = message.payloadDic;
+             NSLog(@"infor:"@"%@", dic);
+             NSString *content = [dic objectForKey:@"content"];
+             NSString *contentType = [dic objectForKey:@"contentType"];
+             
+             NSString *senderUsername = [dic objectForKey:@"senderUsername"];
+             TLMessage *recMessage = [[TLMessage alloc] init];
+             
+             if (contentType.intValue == 01) {
+                 recMessage.messageType = TLMessageTypeText;
+//                 recMessage.text = content;
+             }
+             else if (contentType.intValue == 02) {
+                 recMessage.messageType = TLMessageTypeImage;
+//                 recMessage.imageURL = content;
+             }
+             
+             recMessage.date = [NSDate date];
+//             recMessage.from.username = senderUsername;
+             if ([senderUsername isEqualToString:userName]) {
+                 recMessage.ownerTyper = TLMessageOwnerTypeSelf;
+             }else{
+//                 recMessage.ownerTyper = TLMessageOwnerTypeOther;
+             }
+//             [self.chatMessageVC addNewMessage:recMessage];
+//             [self.chatMessageVC scrollToBottom];
+             
+             
+         });
+     }];
+    
+    
+    
+    
+}
+#pragma mark 发送聊天信息
+/*
+ * to_guid
+ * from_guid
+ * version
+ * senderUsername
+ * contentType 文本消息: 01
+ * content
+ */
+- (void)sendContentWithcontentSendMessage:(TLMessage *)message {
+    if (message.messageType == TLMessageTypeText) {
+        NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"01",@"content":@"sss"};
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        [self.client publishString:dicToString toTopic:@"/user/chat/123-topic" withQos:AtMostOnce retain:NO completionHandler:^(int mid) {
+            
+            NSLog(@"mid ==== %d",mid);
+            
+        }];
+    }else if (message.messageType == TLMessageTypeImage){
+        NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"02",@"content":@"fa"};
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        [self.client publishString:dicToString toTopic:@"/user/chat/123-topic" withQos:AtMostOnce retain:NO completionHandler:^(int mid) {
+            
+            NSLog(@"mid ==== %d",mid);
+            
+        }];
+    }
+    
+}
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {

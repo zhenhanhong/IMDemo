@@ -534,6 +534,14 @@
 		D34FA5E21DB5FB4D00A60DD1 /* will_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = D34FA5D11DB5FB4D00A60DD1 /* will_mosq.c */; };
 		D34FA5E41DB5FB6500A60DD1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D34FA5E31DB5FB6500A60DD1 /* libz.tbd */; };
 		D34FA5E61DB5FB6F00A60DD1 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D34FA5E51DB5FB6F00A60DD1 /* libicucore.tbd */; };
+		D357BAEA1DB5FDD60058C3D3 /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D357BAE61DB5FDD60058C3D3 /* NSObject+YYModel.m */; };
+		D357BAEB1DB5FDD60058C3D3 /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D357BAE81DB5FDD60058C3D3 /* YYClassInfo.m */; };
+		D357BAEE1DB5FEF20058C3D3 /* SingleChartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D357BAED1DB5FEF20058C3D3 /* SingleChartModel.m */; };
+		D357BAF01DB6006F0058C3D3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D357BAEF1DB6006F0058C3D3 /* CoreData.framework */; };
+		D357BAF21DB600760058C3D3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D357BAF11DB600760058C3D3 /* ImageIO.framework */; };
+		D357BAF41DB600850058C3D3 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D357BAF31DB600850058C3D3 /* CoreTelephony.framework */; };
+		D357BAF61DB600960058C3D3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D357BAF51DB600960058C3D3 /* CFNetwork.framework */; };
+		D357BAF81DB6009C0058C3D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D357BAF71DB6009C0058C3D3 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1567,6 +1575,18 @@
 		D34FA5D21DB5FB4D00A60DD1 /* will_mosq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = will_mosq.h; sourceTree = "<group>"; };
 		D34FA5E31DB5FB6500A60DD1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D34FA5E51DB5FB6F00A60DD1 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		D357BAE51DB5FDD60058C3D3 /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
+		D357BAE61DB5FDD60058C3D3 /* NSObject+YYModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YYModel.m"; sourceTree = "<group>"; };
+		D357BAE71DB5FDD60058C3D3 /* YYClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYClassInfo.h; sourceTree = "<group>"; };
+		D357BAE81DB5FDD60058C3D3 /* YYClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYClassInfo.m; sourceTree = "<group>"; };
+		D357BAE91DB5FDD60058C3D3 /* YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYModel.h; sourceTree = "<group>"; };
+		D357BAEC1DB5FEF20058C3D3 /* SingleChartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleChartModel.h; sourceTree = "<group>"; };
+		D357BAED1DB5FEF20058C3D3 /* SingleChartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleChartModel.m; sourceTree = "<group>"; };
+		D357BAEF1DB6006F0058C3D3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D357BAF11DB600760058C3D3 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		D357BAF31DB600850058C3D3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		D357BAF51DB600960058C3D3 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		D357BAF71DB6009C0058C3D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1574,14 +1594,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D357BAF81DB6009C0058C3D3 /* UIKit.framework in Frameworks */,
+				D357BAF61DB600960058C3D3 /* CFNetwork.framework in Frameworks */,
+				D34FA58C1DB5EE4600A60DD1 /* SystemConfiguration.framework in Frameworks */,
+				D357BAF41DB600850058C3D3 /* CoreTelephony.framework in Frameworks */,
+				D357BAF21DB600760058C3D3 /* ImageIO.framework in Frameworks */,
+				D357BAF01DB6006F0058C3D3 /* CoreData.framework in Frameworks */,
+				D34FA5861DB5EE2E00A60DD1 /* Foundation.framework in Frameworks */,
 				D34FA5E61DB5FB6F00A60DD1 /* libicucore.tbd in Frameworks */,
 				D34FA5E41DB5FB6500A60DD1 /* libz.tbd in Frameworks */,
 				D34FA5901DB5EEE100A60DD1 /* libsqlite3.tbd in Frameworks */,
 				D34FA58E1DB5EE9300A60DD1 /* WebKit.framework in Frameworks */,
-				D34FA58C1DB5EE4600A60DD1 /* SystemConfiguration.framework in Frameworks */,
 				D34FA58A1DB5EE3E00A60DD1 /* Security.framework in Frameworks */,
 				D34FA5881DB5EE3700A60DD1 /* MobileCoreServices.framework in Frameworks */,
-				D34FA5861DB5EE2E00A60DD1 /* Foundation.framework in Frameworks */,
 				D34FA5841DB5EE2700A60DD1 /* CoreGraphics.framework in Frameworks */,
 				D34FA53D1DB5ECD500A60DD1 /* MediaPlayer.framework in Frameworks */,
 				D34FA5331DB5EC7B00A60DD1 /* AssetsLibrary.framework in Frameworks */,
@@ -1636,6 +1661,8 @@
 				D34F9EE01DB5DF8B00A60DD1 /* TLChatViewController+Delegate.m */,
 				D34FA5AF1DB5F77E00A60DD1 /* DataHandel.h */,
 				D34FA5B01DB5F77E00A60DD1 /* DataHandel.m */,
+				D357BAEC1DB5FEF20058C3D3 /* SingleChartModel.h */,
+				D357BAED1DB5FEF20058C3D3 /* SingleChartModel.m */,
 				D34FA0201DB5DFB300A60DD1 /* ChatBaseViewController */,
 				D34FA24E1DB5DFDD00A60DD1 /* PrefixHeader.pch */,
 				D34FA5911DB5F4FF00A60DD1 /* Vender */,
@@ -4004,6 +4031,11 @@
 		D34FA5311DB5EC7B00A60DD1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D357BAF71DB6009C0058C3D3 /* UIKit.framework */,
+				D357BAF51DB600960058C3D3 /* CFNetwork.framework */,
+				D357BAF31DB600850058C3D3 /* CoreTelephony.framework */,
+				D357BAF11DB600760058C3D3 /* ImageIO.framework */,
+				D357BAEF1DB6006F0058C3D3 /* CoreData.framework */,
 				D34FA5E51DB5FB6F00A60DD1 /* libicucore.tbd */,
 				D34FA5E31DB5FB6500A60DD1 /* libz.tbd */,
 				D34FA58F1DB5EEE100A60DD1 /* libsqlite3.tbd */,
@@ -4136,6 +4168,7 @@
 		D34FA5911DB5F4FF00A60DD1 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				D357BAE41DB5FDD60058C3D3 /* YYModel */,
 				D34FA5B21DB5FB4D00A60DD1 /* MQTT */,
 				D34FA5921DB5F74000A60DD1 /* AFNetworking */,
 				D34FA53E1DB5ED3600A60DD1 /* MJRefresh */,
@@ -4217,6 +4250,18 @@
 				D34FA5D21DB5FB4D00A60DD1 /* will_mosq.h */,
 			);
 			path = MQTT;
+			sourceTree = "<group>";
+		};
+		D357BAE41DB5FDD60058C3D3 /* YYModel */ = {
+			isa = PBXGroup;
+			children = (
+				D357BAE51DB5FDD60058C3D3 /* NSObject+YYModel.h */,
+				D357BAE61DB5FDD60058C3D3 /* NSObject+YYModel.m */,
+				D357BAE71DB5FDD60058C3D3 /* YYClassInfo.h */,
+				D357BAE81DB5FDD60058C3D3 /* YYClassInfo.m */,
+				D357BAE91DB5FDD60058C3D3 /* YYModel.h */,
+			);
+			path = YYModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -4392,6 +4437,7 @@
 				D34FA1E21DB5DFB300A60DD1 /* TLImageMessageCell.m in Sources */,
 				D34FA1F31DB5DFB300A60DD1 /* TLEmoji.m in Sources */,
 				D34FA2371DB5DFB300A60DD1 /* TLChatFontViewController.m in Sources */,
+				D357BAEE1DB5FEF20058C3D3 /* SingleChartModel.m in Sources */,
 				D34FA3511DB5E07700A60DD1 /* NSObject+RACSelectorSignal.m in Sources */,
 				D34FA37E1DB5E07700A60DD1 /* RACStringSequence.m in Sources */,
 				D34F9EE11DB5DF8B00A60DD1 /* TLFriendsViewController.m in Sources */,
@@ -4430,6 +4476,7 @@
 				D34FA2181DB5DFB300A60DD1 /* TLGroupCell.m in Sources */,
 				D34FA3861DB5E07700A60DD1 /* RACTupleSequence.m in Sources */,
 				D34FA42D1DB5E7BF00A60DD1 /* NSArray+BlocksKit.m in Sources */,
+				D357BAEB1DB5FDD60058C3D3 /* YYClassInfo.m in Sources */,
 				D34FA1E01DB5DFB300A60DD1 /* TLTextDisplayView.m in Sources */,
 				D34FA3741DB5E07700A60DD1 /* RACReturnSignal.m in Sources */,
 				D34FA1A51DB5DFB300A60DD1 /* UIView+Frame.m in Sources */,
@@ -4809,6 +4856,7 @@
 				D34FA1721DB5DFB300A60DD1 /* TLExpressionHelper.m in Sources */,
 				D34FA1821DB5DFB300A60DD1 /* TLMenuCell.m in Sources */,
 				D34FA1F51DB5DFB300A60DD1 /* TLEmojiGroupDisplayModel.m in Sources */,
+				D357BAEA1DB5FDD60058C3D3 /* NSObject+YYModel.m in Sources */,
 				D34FA1761DB5DFB300A60DD1 /* TLAccountAndSafetyHelper.m in Sources */,
 				D34F9EBC1DB5D17700A60DD1 /* wechat2_0.xcdatamodeld in Sources */,
 				D34FA36E1DB5E07700A60DD1 /* RACKVOTrampoline.m in Sources */,
@@ -4906,7 +4954,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = /Users/wangzhen/Desktop/wechat2.0/wechat2.0/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/wangzhen/IMDemo/wechat2.0/wechat2.0/PrefixHeader.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -4917,7 +4965,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -4953,14 +5001,14 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = /Users/wangzhen/Desktop/wechat2.0/wechat2.0/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/wangzhen/IMDemo/wechat2.0/wechat2.0/PrefixHeader.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5059,6 +5107,7 @@
 				D34F9ED21DB5D17700A60DD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D34F9ED31DB5D17700A60DD1 /* Build configuration list for PBXNativeTarget "wechat2.0UITests" */ = {
 			isa = XCConfigurationList;
@@ -5067,6 +5116,7 @@
 				D34F9ED51DB5D17700A60DD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
