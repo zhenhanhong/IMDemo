@@ -1,0 +1,22 @@
+[
+    {
+        "userID" : "u1001",
+        "username" : "lv-qinghou",
+        "nikeName" : "吕秀才",
+        "avatarURL" : "http://a.hiphotos.baidu.com/zhidao/wh%3D600%2C800/sign=9766f7d6cf3d70cf4cafa20bc8ecfd38/00e93901213fb80e93b4c43830d12f2eb83894fc.jpg",
+        "remarkName" : "真子丹",
+        "detailInfo": {
+            "location" : "陕西 西安",
+            "phoneNumber" : "11111111111",
+            "tags" : [
+                "武林外传",
+            ],
+            "albumArray" : [
+                "http://a.hiphotos.baidu.com/zhidao/pic/item/3ac79f3df8dcdu10002f7c850748b4710b9122f53.jpg",
+                "http://img4.duitang.com/uploads/item/201511/17/20151117130657_j3T4s.png",
+                "http://img4.duitang.com/uploads/item/201510/16/20151016113134_TZye4.thumb.224_0.jpeg",
+            ],
+        },
+    }
+ 
+ ]
