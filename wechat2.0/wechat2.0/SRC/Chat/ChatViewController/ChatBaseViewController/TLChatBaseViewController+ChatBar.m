@@ -327,6 +327,28 @@
 //                DDLogError(@"录音文件出错: %@", error);
                 return;
             }
+            message.recFileName = fileName;
+            message.time = time;
+            message.msgStatus = TLVoiceMessageStatusNormal;
+            [message resetMessageFrame];
+            [self sendMessage:message];
+//            if ([self.partner chat_userType] == TLChatUserTypeUser) {
+//                TLVoiceMessage *message1 = [[TLVoiceMessage alloc] init];
+//                message1.fromUser = self.partner;
+//                message1.recFileName = fileName;
+//                message1.time = time;
+//                [self receivedMessage:message1];
+//            }
+//            else {
+//                for (id<TLChatUserProtocol> user in [self.partner groupMembers]) {
+//                    TLVoiceMessage *message1 = [[TLVoiceMessage alloc] init];
+//                    message1.friendID = [user chat_userID];
+//                    message1.fromUser = user;
+//                    message1.recFileName = fileName;
+//                    message1.time = time;
+//                    [self receivedMessage:message1];
+//                }
+//            }
             NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"05",@"url":fileName,@"voicelength":[NSString stringWithFormat:@"%f",time]};
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
             NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -338,12 +360,7 @@
                 
                 
             }];
-            TLVoiceMessage *message = [[TLVoiceMessage alloc] init];
-            message.recFileName = fileName;
-            message.time = time;
-            message.msgStatus = TLVoiceMessageStatusNormal;
-            [message resetMessageFrame];
-            [self sendMessage:message];
+
             
 
 
