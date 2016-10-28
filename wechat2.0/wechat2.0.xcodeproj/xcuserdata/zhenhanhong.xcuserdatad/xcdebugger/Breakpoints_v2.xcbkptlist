@@ -19,29 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "wechat2.0/SRC/Chat/ChatViewController/ChatBaseViewController/TLChatBaseViewController.m"
-            timestampString = "498476361.270695"
+            filePath = "wechat2.0/SRC/Chat/ChatViewController/ChatMessageDisplayView/ChatMessageCells/TLImageMessageCell.m"
+            timestampString = "499339636.086753"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "@implementation TLChatBaseViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "wechat2.0/SRC/Chat/ChatViewController/ChatBaseViewController/TLChatBaseViewController+ChatBar.m"
-            timestampString = "498476144.943071"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "-connetChart"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "-setMessage:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -51,30 +35,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "wechat2.0/SRC/Chat/ChatViewController/ChatBaseViewController/TLChatBaseViewController.m"
-            timestampString = "498475805.059015"
+            filePath = "wechat2.0/SRC/Chat/ChatViewController/ChatMessageDisplayView/ChatMessageCells/TLImageMessageCell.m"
+            timestampString = "499339636.086753"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "@implementation TLChatBaseViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "wechat2.0/SRC/Chat/ChatViewController/ChatBaseViewController/TLChatBaseViewController.m"
-            timestampString = "498475856.1891"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "@implementation TLChatBaseViewController"
-            landmarkType = "3">
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "-setMessage:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

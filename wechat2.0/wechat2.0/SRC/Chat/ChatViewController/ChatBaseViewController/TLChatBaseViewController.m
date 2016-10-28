@@ -26,6 +26,7 @@
 #define passWord "123456"
 #define channel "topic"
 #define userName @"真子丹"
+#define NewUrlRequestforDev @"https://open.dev.mtcentcloud.com/"
 @interface TLChatBaseViewController ()
 
 @property (strong, nonatomic) MQTTClient *client;
@@ -44,17 +45,28 @@
     
     [self p_addMasonry];
 }
-//-(void)viewWillAppear:(BOOL)animated{
-//    [[NSNotificationCenter defaultCenter]postNotificationName:@"refresh" object:nil];
-//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self loadKeyboard];
+    //获取token
+    [self getToken];
     
-    //创建通道
-//     [self startSingleChat];
+}
+-(void)getToken{
+    [DataHandel GetDataWithURLstr:[NSString stringWithFormat:@"%@getFileCloudToken",NewUrlRequestforDev] complete:^(id result) {
+        //   NSLog(@"%@",str);
+        NSDictionary *dic = result;
+        NSLog(@"%@",dic);
+        NSDictionary *dicResult = [dic objectForKey:@"results"];
+        self.cloudtoken = [dicResult objectForKey:@"token"];
+        NSLog(@"%@",self.cloudtoken);
+        
+        
+        
+    }];
+    
 }
 //#pragma mark 创建通道
 ////startSingleChat

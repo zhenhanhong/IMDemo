@@ -64,5 +64,9 @@
  *  发送图片信息
  */
 - (void)sendImageMessage:(UIImage *)image;
+/**
+ *
+ */
+@property(nonatomic, strong)NSString *cloudtoken;
 
 @end

@@ -14,6 +14,7 @@
 #import "DataHandel.h"
 #import "YYModel.h"
 #import "MQTTKit.h"
+#import "QiniuSDK.h"
 #import "SingleChartModel.h"
 #define MC_PATH  "http://mc.mtcent.com"
 #define DEV_EC_PATH  "http://mc.dev.mtcent.com"
@@ -21,6 +22,7 @@
 #define DEV_MC_HOST  "mc.dev.mtcent.com"
 #define userGuid "64e5fb3c-e2b1-4372-9dd6-86eed183a85e"
 #define targetGuid "4b63134b-0a2a-44cb-b417-14eb25fa27f3"
+#define NewUrlRequestforDev @"https://open.dev.mtcentcloud.com/"
 //#define userGuid "4b63134b-0a2a-44cb-b417-14eb25fa27f3"
 //#define targetGuid "64e5fb3c-e2b1-4372-9dd6-86eed183a85e"
 #define passWord "123456"
@@ -135,18 +137,6 @@
         
         
     }];
-    
-
-    
-//    if ([self.partner chat_userType] == TLChatUserTypeUser) {
-//        
-//        TLTextMessage *message1 = [[TLTextMessage alloc] init];
-//        message1.fromUser = self.partner;
-//        message1.text = text;
-//        [self receivedMessage:message1];
-//        
-//    }
-
 }
 #pragma mark 创建通道
 //startSingleChat
@@ -162,7 +152,6 @@
                 self.mdoel = [SingleChartModel yy_modelWithDictionary:self.resultDic];
                 [self connetChart];
             }
-            
         }
     }];
 }
@@ -172,21 +161,68 @@
     NSString *imagePath = [NSFileManager pathUserChatImage:imageName];
     [[NSFileManager defaultManager] createFileAtPath:imagePath contents:imageData attributes:nil];
     
-    NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"02",@"imagePath":[NSString stringWithFormat:@"%@",imageName],@"sizewidth":[NSString stringWithFormat:@"%f",image.size.width],@"sizeheight":[NSString stringWithFormat:@"%f",image.size.height]};
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [self.client publishString:dicToString toTopic:@"/user/chat/123-topic" withQos:AtMostOnce retain:NO completionHandler:^(int mid) {
-        
-        NSLog(@"mid ==== %d",mid);
-        TLImageMessage *message = [[TLImageMessage alloc] init];
-        message.fromUser = self.user;
-        message.ownerTyper = TLMessageOwnerTypeSelf;
-        message.imagePath = imageName;
-        message.imageSize = image.size;
-        [self sendMessage:message];
-        
-    }];
+    [self getHashforImg:imagePath image:image path:imageName];
+  
+}
+#pragma mark - 七牛上传图片
+-(void)getHashforImg:(NSString *)filePath image:(UIImage *)image path:(NSString *)imagePath{
+    UIImage *imge = [[UIImage alloc]initWithContentsOfFile:filePath];
+    NSData *data = (UIImagePNGRepresentation(imge) == nil ? UIImageJPEGRepresentation(imge, 1) : UIImagePNGRepresentation(imge));
+    
+    QNUploadManager *upManger = [[QNUploadManager alloc]init];
+    NSString *token = self.cloudtoken;
+    [upManger putData:data key:nil token:token complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+        NSDictionary *dic = resp;
+        NSString *hashStr = [dic objectForKey:@"hash"];
+        if (hashStr) {
+            
+            //获取图片url
+            [self getPicUrlwithHash:(hashStr) image:image path:imagePath];
+            
+        }
+    } option:nil];
+}
+-(void)getPicUrlwithHash:(NSString *)hash image:(UIImage *)image path:(NSString *)path{
+    NSString *str = [NSString stringWithFormat:@"%@getUrlByHash?hash=%@&product_guid=a5c72d76-16dc-4bb6-b6af-f2e562b1839b",NewUrlRequestforDev,hash];
+    [DataHandel GetDataWithURLstr:str complete:^(id result) {
+        if (result) {
+      
+            NSString *picurl = [result objectForKey:@"result"];
+            if (picurl != nil) {
+                NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"02",@"imageUrl":picurl,@"sizewidth":[NSString stringWithFormat:@"%f",image.size.width],@"sizeheight":[NSString stringWithFormat:@"%f",image.size.height]};
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                [self.client publishString:dicToString toTopic:@"/user/chat/123-topic" withQos:AtMostOnce retain:NO completionHandler:^(int mid) {
+                    
+                    NSLog(@"mid ==== %d",mid);
+                    TLImageMessage *message = [[TLImageMessage alloc] init];
+                    message.fromUser = self.user;
+                    message.ownerTyper = TLMessageOwnerTypeSelf;
+                    message.imagePath = path;
+                    message.imageSize = image.size;
+                    [self sendMessage:message];
+                    
+                }];
 
+            }else{
+                NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"02",@"imagePath":[NSString stringWithFormat:@"%@",hash],@"sizewidth":[NSString stringWithFormat:@"%f",image.size.width],@"sizeheight":[NSString stringWithFormat:@"%f",image.size.height]};
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                [self.client publishString:dicToString toTopic:@"/user/chat/123-topic" withQos:AtMostOnce retain:NO completionHandler:^(int mid) {
+                    
+                    NSLog(@"mid ==== %d",mid);
+                    TLImageMessage *message = [[TLImageMessage alloc] init];
+                    message.fromUser = self.user;
+                    message.ownerTyper = TLMessageOwnerTypeSelf;
+                    message.imagePath = hash;
+                    message.imageSize = image.size;
+                    [self sendMessage:message];
+                    
+                }];
+
+            }
+                   }
+    }];
 }
 -(void)connetChart{
     NSString *clientID = [UIDevice currentDevice].identifierForVendor.UUIDString;
@@ -223,12 +259,12 @@
                  [self receivedMessage:message];
              }else if (contentType.intValue == 02){
                  TLImageMessage *message1 = [[TLImageMessage alloc] init];
-                NSString *imagePath = [dic objectForKey:@"imagePath"];
+                NSString *imagePath = [dic objectForKey:@"imageUrl"];
                 NSString *sizewidth = [dic objectForKey:@"sizewidth"];
                 NSString *sizeheight = [dic objectForKey:@"sizeheight"];
                  message1.fromUser = self.partner;
                  message1.ownerTyper = TLMessageOwnerTypeFriend;
-                 message1.imagePath = imagePath;
+                 message1.imageURL = imagePath;
                  message1.imageSize = CGSizeMake(sizewidth.floatValue, sizeheight.floatValue);
                  [self receivedMessage:message1];
              }else if (contentType.intValue == 05){
@@ -327,42 +363,8 @@
 //                DDLogError(@"录音文件出错: %@", error);
                 return;
             }
-            message.recFileName = fileName;
-            message.time = time;
-            message.msgStatus = TLVoiceMessageStatusNormal;
-            [message resetMessageFrame];
-            [self sendMessage:message];
-//            if ([self.partner chat_userType] == TLChatUserTypeUser) {
-//                TLVoiceMessage *message1 = [[TLVoiceMessage alloc] init];
-//                message1.fromUser = self.partner;
-//                message1.recFileName = fileName;
-//                message1.time = time;
-//                [self receivedMessage:message1];
-//            }
-//            else {
-//                for (id<TLChatUserProtocol> user in [self.partner groupMembers]) {
-//                    TLVoiceMessage *message1 = [[TLVoiceMessage alloc] init];
-//                    message1.friendID = [user chat_userID];
-//                    message1.fromUser = user;
-//                    message1.recFileName = fileName;
-//                    message1.time = time;
-//                    [self receivedMessage:message1];
-//                }
-//            }
-            NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"05",@"url":fileName,@"voicelength":[NSString stringWithFormat:@"%f",time]};
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
-            NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            [self.client publishString:dicToString toTopic:@"/user/chat/123-topic" withQos:AtMostOnce retain:NO completionHandler:^(int mid) {
-                
-                NSLog(@"mid ==== %d",mid);
-       
 
-                
-                
-            }];
-
-            
-
+            [self getHashforVoid:path message:message time:time];
 
         }
     } cancelBlock:^{
@@ -370,7 +372,64 @@
         [self.recorderIndicatorView removeFromSuperview];
     }];
 }
+#pragma mark - 七牛上传文件
+-(void)getHashforVoid:(NSString *)voidPath message:(TLVoiceMessage *)message time:(CGFloat)time{
+    NSData *data = [NSData dataWithContentsOfFile:voidPath];
+    QNUploadManager *upManger = [[QNUploadManager alloc]init];
+    NSString *token = self.cloudtoken;
+    [upManger putData:data key:nil token:token complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+        NSDictionary *dic = resp;
+        NSString *hashStr = [dic objectForKey:@"hash"];
+        if (hashStr) {
+            [self getVoidUrlwithHash:hashStr message:message time:time];
+            
+        }
+    } option:nil];
 
+}
+-(void)getVoidUrlwithHash:(NSString *)hash message:(TLVoiceMessage *)message time:(CGFloat)time{
+    NSString *str = [NSString stringWithFormat:@"%@getUrlByHash?has=%@",NewUrlRequestforDev,hash];
+    [DataHandel GetDataWithURLstr:str complete:^(id result) {
+        if (result) {
+            NSString *voidurl;
+            if (voidurl != nil) {
+                message.recFileName = voidurl;
+                message.time = time;
+                message.msgStatus = TLVoiceMessageStatusNormal;
+                [message resetMessageFrame];
+                [self sendMessage:message];
+                
+                NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"05",@"url":voidurl,@"voicelength":[NSString stringWithFormat:@"%f",time]};
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                [self.client publishString:dicToString toTopic:@"/user/chat/123-topic" withQos:AtMostOnce retain:NO completionHandler:^(int mid) {
+                    NSLog(@"mid ==== %d",mid);
+                    
+                }];
+
+                
+            }else{
+                message.recFileName = hash;
+                message.time = time;
+                message.msgStatus = TLVoiceMessageStatusNormal;
+                [message resetMessageFrame];
+                [self sendMessage:message];
+                
+                NSDictionary *sendData = @{@"to_guid":@targetGuid,@"from_guid":@userGuid,@"senderUsername":userName,@"contentType":@"05",@"url":hash,@"voicelength":[NSString stringWithFormat:@"%f",time]};
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendData options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *dicToString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                [self.client publishString:dicToString toTopic:@"/user/chat/123-topic" withQos:AtMostOnce retain:NO completionHandler:^(int mid) {
+                    NSLog(@"mid ==== %d",mid);
+                    
+                }];
+
+    
+          }
+        }
+    }];
+
+    
+}
 - (void)chatBarWillCancelRecording:(TLChatBar *)chatBar cancel:(BOOL)cancel
 {
     [self.recorderIndicatorView setStatus:cancel ? TLRecorderStatusWillCancel : TLRecorderStatusRecording];

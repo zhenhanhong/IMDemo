@@ -8,6 +8,8 @@
 
 #import "TLImageMessageCell.h"
 #import "TLMessageImageView.h"
+#import "SDWebImageManager.h"
+#import "UIImageView+WebCache.h"
 
 #define     MSG_SPACE_TOP       2
 
@@ -35,7 +37,10 @@
     }
     TLMessageOwnerType lastOwnType = self.message ? self.message.ownerTyper : -1;
     [super setMessage:message];
-    
+    if ([message imageURL]) {
+        [self.msgImageView sd_setImageWithURL:[NSURL URLWithString:[message imageURL]] placeholderImage:[UIImage imageNamed:@""]];
+        
+    }
     if ([message imagePath]) {
         NSString *imagePath = [NSFileManager pathUserChatImage:[message imagePath]];
         [self.msgImageView setThumbnailPath:imagePath highDefinitionImageURL:[message imagePath]];
